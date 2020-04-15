@@ -9,6 +9,7 @@ final class FlickrPhotosViewController: UICollectionViewController {
                                              right: 20.0)
   private var searches: [FlickrSearchResults] = []  // 各検索結果を保存する
   private let flickr = Flickr()  // Flickr検索用
+  private let itemsPerRow: CGFloat = 3
   
 }
 
@@ -79,3 +80,31 @@ extension FlickrPhotosViewController {
 }
 
 
+// MARK: - Collection View Flow Layout Delegate
+extension FlickrPhotosViewController : UICollectionViewDelegateFlowLayout {
+  // セルのサイズに関するレイアウトを決定する
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+    let paddingSpace   = sectionInsets.left * (itemsPerRow + 1)
+    let availableWidth = view.frame.width - paddingSpace
+    let widthPerItem   = availableWidth / itemsPerRow
+    
+    return CGSize(width: widthPerItem, height: widthPerItem)
+  }
+  
+  // セル同士の、上下左右の余白を設定する
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      insetForSectionAt section: Int) -> UIEdgeInsets {
+    return sectionInsets
+  }
+  
+  // Row同士の余白を設定する
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return sectionInsets.left
+  }
+}
