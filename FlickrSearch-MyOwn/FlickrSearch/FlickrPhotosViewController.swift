@@ -72,9 +72,12 @@ extension FlickrPhotosViewController {
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath
   ) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    cell.backgroundColor = .black
-    // Configure the cell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FlickrPhotoCell
+    
+    let flickrPhoto = photo(for: indexPath)
+    cell.backgroundColor = .white
+    cell.imageView.image = flickrPhoto.thumbnail
+
     return cell
   }
 }
